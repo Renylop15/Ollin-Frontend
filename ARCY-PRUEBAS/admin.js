@@ -1,43 +1,45 @@
 const server = "https://ollin-backend-production.up.railway.app"
 
 document.addEventListener('DOMContentLoaded', async function () {
+  try {
+    const res = await fetch(`${server}/api/authenticator/usuarioLogueado`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      // ¡ESTA ES LA LÍNEA MÁGICA! Hace que el navegador envíe la cookie solo.
+      credentials: 'include' 
+      // Borramos el "body" porque ya no necesitamos mandarlo como texto.
+    });
 
-  const valorToken = obtenerValorCookie("jwt")
-
-  const res = await fetch(`${server}/api/authenticator/usuarioLogueado`, {
-  method: 'POST',
-  headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ token: valorToken })
-  });
-
-  const usuario = await res.json();
-  window.usuarioLogueado = usuario;
-  const nombreUsuario = document.getElementById("nombreUsuario")
-  nombreUsuario.innerHTML = usuario.Nombre  
-  nombreUsuario.dataset.idTurista = usuario.id
-})
-
-
-function obtenerValorCookie(name) {
-
-  var nameEQ = name + "="; 
-  var ca = document.cookie.split(';');
-
-  for(var i=0;i < ca.length;i++) {
-
-    var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1,c.length);
-    if (c.indexOf(nameEQ) == 0) {
-      return decodeURIComponent( c.substring(nameEQ.length,c.length) );
+    // Si el servidor responde que no estamos logueados (401), mandamos al login
+    if (!res.ok) {
+      window.location.href = "/";
+      return;
     }
+
+    const usuario = await res.json();
+    
+    // Si por alguna razón el usuario viene vacío
+    if (!usuario || usuario === false) {
+      window.location.href = "/";
+      return;
+    }
+
+    // Si todo salió bien, guardamos los datos
+    window.usuarioLogueado = usuario;
+    const nombreUsuario = document.getElementById("nombreUsuario");
+    
+    if (nombreUsuario) { // Siempre es bueno verificar que el elemento existe en el HTML
+      nombreUsuario.innerHTML = usuario.Nombre;
+      nombreUsuario.dataset.idTurista = usuario.id;
+    }
+
+  } catch (error) {
+    console.error("Error verificando sesión:", error);
+    window.location.href = "/";
   }
-
-  return null;
-
-}
-
+})
 
 document.addEventListener('DOMContentLoaded', async function () {
   document.getElementById('cerrarSesion').addEventListener('click', async (e) => {
