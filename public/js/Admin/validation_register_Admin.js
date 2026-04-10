@@ -1,3 +1,4 @@
+const server = "https://ollin-backend-production.up.railway.app"
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('loginFormRegister');
 
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const correo = document.getElementById('email').value;
                 const contrasena = document.getElementById('password').value;
                 console.log(nombre, apellido, correo, contrasena);
-                const res = await fetch('http://localhost:1234/api/authenticatorAdmin/registroA/usuarioAdmin', {
+                const res = await fetch(`${server}/api/authenticatorAdmin/registroA/usuarioAdmin`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

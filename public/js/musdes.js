@@ -1,10 +1,11 @@
+const server = "https://ollin-backend-production.up.railway.app"
 
 
 
 
-const API_URL = 'http://localhost:1234/api/lugar/';
-const API_URL1 = 'http://localhost:1234/api/itinerario/obtenerItinerarios';
-const API_URL_CREAR_LUGAR_ITINERARIO = 'http://localhost:1234/api/lugarItinerario/crearLugarItinerario';
+const API_URL = `${server}/api/lugar/`;
+const API_URL1 = `${server}/api/itinerario/obtenerItinerarios`;
+const API_URL_CREAR_LUGAR_ITINERARIO = `${server}/api/lugarItinerario/crearLugarItinerario`;
 const museosData = {};
 let ALL_MUSEOS = [];
 let CURRENT_RENDER_TOKEN = 0;
@@ -112,7 +113,7 @@ async function fetchItineraryPlaces(id_Turista) {
 
 // Agrega un museo a la lista de favoritos
 function addFavorite(idMuseo, NomLugar, idTurista) {
-    fetch('http://localhost:1234/api/lugarFavorito/crearLugarFavorito', {
+    fetch(`${server}/api/lugarFavorito/crearLugarFavorito`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -138,7 +139,7 @@ function addFavorite(idMuseo, NomLugar, idTurista) {
 
   // Agrega un museo a la lista de visitados
   function addVisit(idMuseo, NomLugar, idTurista) {
-    fetch('http://localhost:1234/api/lugarVisitado/crearLugarVisitado', {
+    fetch(`${server}/api/lugarVisitado/crearLugarVisitado`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -165,7 +166,7 @@ function addFavorite(idMuseo, NomLugar, idTurista) {
 
   // Elimina un museo de la lista de favoritos
 function removeFavorite(idLugar, idTurista) {
-  fetch('http://localhost:1234/api/lugarFavorito/eliminarLugarFavorito', {
+  fetch(`${server}/api/lugarFavorito/eliminarLugarFavorito`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -190,7 +191,7 @@ function removeFavorite(idLugar, idTurista) {
 
 // Elimina un museo de la lista de visitados
 function removeVisit(idLugar, idTurista) {
-    fetch('http://localhost:1234/api/lugarVisitado/eliminarLugarVisitado', {
+    fetch(`${server}/api/lugarVisitado/eliminarLugarVisitado`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -284,7 +285,7 @@ async function getInfo(placeId) {
 async function getFavorite(idMuseo, idTurista) {
     try {
         const response = await fetch(
-            'http://localhost:1234/api/lugarFavorito/obtenerLugarFavoritoIdlugar',
+            `${server}/api/lugarFavorito/obtenerLugarFavoritoIdlugar`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -311,7 +312,7 @@ async function getFavorite(idMuseo, idTurista) {
 async function getVisit(idMuseo, idTurista) {
     try {
         const response = await fetch(
-            'http://localhost:1234/api/lugarVisitado/obtenerLugarVisitadoIdlugar',
+            `${server}/api/lugarVisitado/obtenerLugarVisitadoIdlugar`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1190,7 +1191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // Realizar la petición fetch para enviar los datos
         try {
-            const res = await fetch('http://localhost:1234/api/itinerario/crearItinerario', {
+            const res = await fetch(`${server}/api/itinerario/crearItinerario`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

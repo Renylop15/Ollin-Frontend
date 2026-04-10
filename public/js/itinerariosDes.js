@@ -1,6 +1,8 @@
-const API_URL = 'http://localhost:1234/api/itinerario/obtenerItinerarios';
-const API_URL1 = 'http://localhost:1234/api/lugarItinerario/obtenerLugaresItinerario';
-const API_URL_STATEI = 'http://localhost:1234/api/lugarItinerario/editarEstadoLugarItinerario';
+const server = "https://ollin-backend-production.up.railway.app"
+
+const API_URL = `${server}/api/itinerario/obtenerItinerarios`;
+const API_URL1 = `${server}/api/lugarItinerario/obtenerLugaresItinerario`;
+const API_URL_STATEI = `${server}/api/lugarItinerario/editarEstadoLugarItinerario`;
 
 // Función para obtener los itinerarios del usuario
 async function fetchItineraryPlaces(id_Turista) {
@@ -205,7 +207,7 @@ function goToMuseums(itineraryId) {
 // Función para actualizar el estado del itinerario
 async function updateItineraryState(idItinerario) {
     try {
-        const response = await fetch('http://localhost:1234/api/itinerario/editarEstadoItinerario', {
+        const response = await fetch(`${server}/api/itinerario/editarEstadoItinerario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Itinerario: idItinerario, Estado: 'C' })
@@ -220,7 +222,7 @@ async function updateItineraryState(idItinerario) {
 
 async function finalizeItineraryState(idPlan) {
     try {
-        const response = await fetch('http://localhost:1234/api/itinerario/editarEstadoItinerario', {
+        const response = await fetch(`${server}/api/itinerario/editarEstadoItinerario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Plan: idPlan, Estado: 'F' })
@@ -273,7 +275,7 @@ async function deleteItinerary(idItinerario) {
 
 async function performDeletion(idItinerario) {
     try {
-        const response = await fetch('http://localhost:1234/api/itinerario/eliminarItinerario', {
+        const response = await fetch(`${server}/api/itinerario/eliminarItinerario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Itinerario: idItinerario })
@@ -304,7 +306,7 @@ async function performDeletion(idItinerario) {
 
 async function fetchFirstPlaceOfItinerary(idPlan) {
     try {
-        const response = await fetch('http://localhost:1234/api/lugarItinerario/obtenerLugaresItinerario', {
+        const response = await fetch(`${server}/api/lugarItinerario/obtenerLugaresItinerario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ idPlan })

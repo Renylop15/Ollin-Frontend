@@ -1,3 +1,4 @@
+const server = "https://ollin-backend-production.up.railway.app"
 document.addEventListener('DOMContentLoaded', function () {
   // Función para manejar el clic en ambos botones 
   const handleFavoriteClick = async (e) => {
@@ -6,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const infoName = document.getElementById("info-name");
     const nombreUsuario = document.getElementById("nombreUsuario");
 
-    const res = await fetch('http://localhost:1234/api/lugarFavorito/crearLugarFavorito', {
+    const res = await fetch(`${server}/api/lugarFavorito/crearLugarFavorito`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

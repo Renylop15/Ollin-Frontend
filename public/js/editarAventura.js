@@ -1,6 +1,8 @@
 import { calcDistTime } from "./routesEditAdvn.js";
 import { getIndividualDistTime } from "./dragNdrop.js";
 import { updateItemDurationDistance } from "./dragNdrop.js";
+const server = "https://ollin-backend-production.up.railway.app"
+
 let geocoder;
 function editarAventura(lugares,userCoords,durations){
     let modeTravel;
@@ -224,7 +226,7 @@ export {editarAventura}
 
 async function fetchDelete(id_lugar_iti_d){
     try {
-        const response = await fetch('http://localhost:1234/api/lugarItinerario/eliminarLugarItinerario', {
+        const response = await fetch(`${server}/api/lugarItinerario/eliminarLugarItinerario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({id_Lugar_Itinerario: `${id_lugar_iti_d}`})
@@ -238,7 +240,7 @@ async function fetchDelete(id_lugar_iti_d){
 
 async function fetchEditIti(lugarEditado){
     try {
-        const response = await fetch('http://localhost:1234/api/lugarItinerario/editarLugarItinerario', {
+        const response = await fetch(`${server}/api/lugarItinerario/editarLugarItinerario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(lugarEditado)

@@ -1,9 +1,10 @@
 import { mostrarLugares } from "../ARCY-PRUEBAS/places2.js";
 import { getInfo, obtenerCoordenadasPorPlaceId, obtenerUnLugarConId, updateHTML } from "./utilidadesMapa.js";
+const server = "https://ollin-backend-production.up.railway.app"
 
 export const comprobarSiLugarEsFavorito = async (placeId) => {
   try {
-      const res = await fetch('http://localhost:1234/api/lugarFavorito/obtenerLugarFavoritoIdlugar', {
+      const res = await fetch(`${server}/api/lugarFavorito/obtenerLugarFavoritoIdlugar`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -42,7 +43,7 @@ export const handleFavoriteClick = async (e) => {
   const nombreUsuario = document.getElementById("nombreUsuario");
 
 
-  const res = await fetch('http://localhost:1234/api/lugarFavorito/crearLugarFavorito', {
+  const res = await fetch(`${server}/api/lugarFavorito/crearLugarFavorito`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

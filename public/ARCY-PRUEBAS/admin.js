@@ -1,8 +1,10 @@
+const server = "https://ollin-backend-production.up.railway.app"
+
 document.addEventListener('DOMContentLoaded', async function () {
 
   const valorToken = obtenerValorCookie("jwt")
 
-  const res = await fetch('http://localhost:1234/api/authenticator/usuarioLogueado', {
+  const res = await fetch(`${server}/api/authenticator/usuarioLogueado`, {
   method: 'POST',
   headers: {
       'Content-Type': 'application/json'

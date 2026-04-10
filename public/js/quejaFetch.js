@@ -1,4 +1,5 @@
 // submitQueja.js
+const server = "https://ollin-backend-production.up.railway.app"
 
 async function enviarQueja() {
     var idTurista = "1"; // Este valor podría ser dinámico según la sesión del usuario
@@ -11,7 +12,7 @@ async function enviarQueja() {
     }
 
     try {
-        const response = await fetch('http://localhost:1234/api/queja/crearQueja', {
+        const response = await fetch(`${server}/api/queja/crearQueja`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 let modal
 let idAdmin
+const server = "https://ollin-backend-production.up.railway.app"
 
 function esperarUsuario() {
     return new Promise(resolve => {
@@ -412,7 +413,7 @@ function removeHighlight(field) {
 
 async function fetchGetUser(idAdmin){
     try {
-        const response = await fetch(`http://localhost:1234/api/usuarioAdmin/identificador/${idAdmin}`, {
+        const response = await fetch(`${server}/api/usuarioAdmin/identificador/${idAdmin}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -425,7 +426,7 @@ async function fetchGetUser(idAdmin){
 
 async function fetchChangeName(idAdmin,newName){
     try {
-        const response = await fetch(`http://localhost:1234/api/usuarioAdmin/actualizarNom`, {
+        const response = await fetch(`${server}/api/usuarioAdmin/actualizarNom`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Admin: idAdmin, Nombre: newName })
@@ -458,7 +459,7 @@ async function alertsChangeName(idAdmin,newName){
 
 async function fetchChangeLastName(idAdmin,newLastName){
     try {
-        const response = await fetch(`http://localhost:1234/api/usuarioAdmin/actualizarApe`, {
+        const response = await fetch(`${server}/api/usuarioAdmin/actualizarApe`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Admin: idAdmin, Apellido: newLastName })
@@ -491,7 +492,7 @@ async function alertsChangeLastName(idAdmin,newLastName){
 
 async function fetchChangeEmail(idAdmin,newEmail){
     try {
-        const response = await fetch(`http://localhost:1234/api/usuarioAdmin/actualizarEmail`, {
+        const response = await fetch(`${server}/api/usuarioAdmin/actualizarEmail`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Admin: idAdmin, Correo: newEmail })
@@ -524,7 +525,7 @@ async function alertsChangeEmail(idAdmin,newEmail){
 
 async function fetchChangePW(idAdmin,newPassword){
     try {
-        const response = await fetch(`http://localhost:1234/api/usuarioAdmin/cambiarContrasena`, {
+        const response = await fetch(`${server}/api/usuarioAdmin/cambiarContrasena`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Admin: idAdmin, Contrasena: newPassword })
@@ -584,7 +585,7 @@ function deleteAcc(idAdmin){
     console.log('ID del usuario a eliminar:', userId);
 
         //fetch eliminar
-    fetch(`http://localhost:1234/api/deleteUsuario/${idAdmin}`,{
+    fetch(`${server}/api/deleteUsuario/${idAdmin}`,{
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
     })

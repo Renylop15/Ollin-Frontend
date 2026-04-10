@@ -1,5 +1,6 @@
 import { getUserLocation } from "../ARCY-imports/getUserLocation.js"
 import { rutaIti } from "../ARCY-imports/rutas.js"
+const server = "https://ollin-backend-production.up.railway.app"
 
 let mapa;
 let directionsService
@@ -70,7 +71,7 @@ function getTime(originCoords, destCords, mode){
 
   function addVisit(idMuseo, NomLugar, idTurista) {
       console.log(idMuseo, NomLugar, idTurista)
-    fetch('http://localhost:1234/api/lugarVisitado/crearLugarVisitado', {
+    fetch(`${server}/api/lugarVisitado/crearLugarVisitado`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

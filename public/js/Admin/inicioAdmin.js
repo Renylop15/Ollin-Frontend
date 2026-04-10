@@ -1,6 +1,7 @@
+const server = "https://ollin-backend-production.up.railway.app"
 async function fetchLoadUsers() {
   try {
-      const response = await fetch(`http://localhost:1234/api/usuarioTurista`, {
+      const response = await fetch(`${server}/api/usuarioTurista`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
       });
@@ -14,7 +15,7 @@ async function fetchLoadUsers() {
 
 async function fetchLoadQuejasMuseos() {
   try {
-      const response = await fetch('http://localhost:1234/api/queja', {
+      const response = await fetch(`${server}/api/queja`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
       });
@@ -27,7 +28,7 @@ async function fetchLoadQuejasMuseos() {
 
 async function fetchRecommendedMuseums() {
     try {
-        const response = await fetch('http://localhost:1234/api/lugarVisitado/recomendarMuseos',
+        const response = await fetch(`${server}/api/lugarVisitado/recomendarMuseos`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
@@ -166,7 +167,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   document.getElementById("btn-crear").addEventListener("click", async () => {
   try {
-    const res = await fetch("http://localhost:1234/ejecutarScript", {
+    const res = await fetch(`${server}/ejecutarScript`, {
       method: "POST"
     });
 

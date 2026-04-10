@@ -1,9 +1,10 @@
 
 console.log("iniciandodespli");
 
+const server = "https://ollin-backend-production.up.railway.app"
 
 // Define la URL de la API para obtener lugares favoritos
-const API_URL = 'http://localhost:1234/api/lugarFavorito/obtenerLugaresFavoritos';
+const API_URL = `${server}/api/lugarFavorito/obtenerLugaresFavoritos`;
 
 // Función para obtener los lugares favoritos del usuario
 async function fetchFavoritePlaces(idTurista) {
@@ -227,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function removeFavorite(idLugar, idTurista) {
-  fetch('http://localhost:1234/api/lugarFavorito/eliminarLugarFavorito', {
+  fetch(`${server}/api/lugarFavorito/eliminarLugarFavorito`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

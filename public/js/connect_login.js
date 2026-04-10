@@ -1,5 +1,6 @@
 // Verificar carga del JS
 console.log('connect_login.js cargado')
+const server = "https://ollin-backend-production.up.railway.app"
 
 document.addEventListener('DOMContentLoaded', async function () {
   console.log('DOM Cargado')
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         console.log('Realizando la petición...')
 
         // Petición asíncrona con await
-        const response = await fetch('http://localhost:1234/api/authenticator/login', {
+        const response = await fetch(`${server}/api/authenticator/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

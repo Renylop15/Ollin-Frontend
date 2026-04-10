@@ -1,5 +1,7 @@
 import { dragNdrop } from "./dragNdrop.js";
 import { editarAventura } from "./editarAventura.js";
+const server = "https://ollin-backend-production.up.railway.app"
+
 let mapa;
 let geocoder;
 const lugaresDefault = ["museum", "restaurant", "casino", "park", "night_club", "stadium", "zoo", "cafe", "point_of_interest"];
@@ -378,7 +380,7 @@ async function fetchAdventurePlaces(idPlan) {
   //console.log("fetchAdventurePlaces llamada con id_Itinerario:", idPlan);
 
   try {
-      const response = await fetch('http://localhost:1234/api/lugarItinerario/obtenerLugaresItinerario', {
+      const response = await fetch(`${server}/api/lugarItinerario/obtenerLugaresItinerario`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({idPlan})
@@ -393,7 +395,7 @@ async function fetchAdventurePlaces(idPlan) {
 // Función para obtener los datos del itinerario
 async function fetchAdventureData(idPlan) {
   try {
-      const response = await fetch(`http://localhost:1234/api/itinerario/${idPlan}`, {
+      const response = await fetch(`${server}/api/itinerario/${idPlan}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
       });

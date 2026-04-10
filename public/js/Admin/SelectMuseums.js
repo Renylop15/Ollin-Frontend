@@ -1,6 +1,7 @@
+const server = "https://ollin-backend-production.up.railway.app"
 
 // Define la URL de la API para obtener lugares favoritos
-const API_URL = 'http://localhost:1234/api/lugar/';
+const API_URL = `${server}/api/lugar/`;
 
 // Función para obtener los lugares favoritos del usuario
 async function fetchPlaces() {

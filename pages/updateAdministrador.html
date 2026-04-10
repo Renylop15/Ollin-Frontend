@@ -140,11 +140,13 @@
     <script type="module" src="js/map.js"></script>
     
     <script>
+        const server = "https://ollin-backend-production.up.railway.app"
+
         document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('userId');
     
-    fetch(`http://localhost:1234/api/usuarioTurista/identificador/${userId}`)
+    fetch(`${server}/api/usuarioTurista/identificador/${userId}`)
         .then(response => response.json())
         .then(usuario => {
             document.getElementById('nameUser').innerHTML = "<b>" + usuario.Nombre + " " + usuario.Apellido + "</b>";

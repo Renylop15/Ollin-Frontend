@@ -1,5 +1,6 @@
 import { getUserLocation } from "../ARCY-imports/getUserLocation.js"
 import { imprimirMapa } from "../ARCY-imports/imiprimirMapa.js"
+const server = "https://ollin-backend-production.up.railway.app"
 
 let mapa;
 let geocoder;
@@ -1295,7 +1296,7 @@ async function updateFavoriteButtonStatus(placeId) {
     console.log("ID del turista:", nombreUsuario.dataset.idTurista);
 
     try {
-        const res = await fetch('http://localhost:1234/api/lugarFavorito/obtenerLugaresFavoritos', {
+        const res = await fetch(`${server}/api/lugarFavorito/obtenerLugaresFavoritos`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

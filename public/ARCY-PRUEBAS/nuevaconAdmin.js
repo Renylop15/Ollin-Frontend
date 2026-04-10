@@ -1,3 +1,4 @@
+const server = "https://ollin-backend-production.up.railway.app"
 document.addEventListener('DOMContentLoaded', async () => {
     const formulario = document.getElementById('recuperar');
   
@@ -5,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         evento.preventDefault();
 
         const email = document.getElementById('email').value;
-        const respuesta = await fetch('http://localhost:1234/api/authenticatorAdmin/olvidarContrasena', {
+        const respuesta = await fetch(`${server}/api/authenticatorAdmin/olvidarContrasena`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

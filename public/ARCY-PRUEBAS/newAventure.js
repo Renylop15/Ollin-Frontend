@@ -1,3 +1,4 @@
+const server = "https://ollin-backend-production.up.railway.app"
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('formNuevaAventura').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
       // Realizar la petición fetch para enviar los datos
       try {
-          const res = await fetch('http://localhost:1234/api/itinerario/crearItinerario', {
+          const res = await fetch(`${server}/api/itinerario/crearItinerario`, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'

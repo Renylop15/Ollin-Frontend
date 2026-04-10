@@ -1,9 +1,10 @@
 console.log("iniciandodespli");
 
+const server = "https://ollin-backend-production.up.railway.app"
 
 // Define la URL de la API para obtener lugares favoritos
-const API_URL = 'http://localhost:1234/api/lugarVisitado/obtenerLugaresVisitados';
-const API_URL1 = 'http://localhost:1234/api/itinerario/obtenerItinerariosFinalizados';
+const API_URL = `${server}/api/lugarVisitado/obtenerLugaresVisitados`;
+const API_URL1 = `${server}/api/itinerario/obtenerItinerariosFinalizados`;
 
 // Función para obtener los lugares favoritos del usuario
 async function fetchVisitPlaces(idTurista) {
@@ -38,7 +39,7 @@ async function fetchItineraryPlaces(id_Turista) {
 
 async function fetchFirstPlaceOfItinerary(idPlan) {
     try {
-        const response = await fetch('http://localhost:1234/api/lugarItinerario/obtenerLugaresItinerario', {
+        const response = await fetch(`${server}/api/lugarItinerario/obtenerLugaresItinerario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ idPlan })
@@ -449,7 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function removeVisit(idLugar, idTurista) {
-  fetch('http://localhost:1234/api/lugarVisitado/eliminarLugarVisitado', {
+  fetch(`${server}/api/lugarVisitado/eliminarLugarVisitado`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

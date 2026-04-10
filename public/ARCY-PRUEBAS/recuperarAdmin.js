@@ -1,3 +1,4 @@
+const server = "https://ollin-backend-production.up.railway.app"
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('passwordRecover');
     const password = document.getElementById('password');
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
         if (validateForm()) {
             try {
-                const response = await fetch('http://localhost:1234/api/authenticatorAdmin/establecerNuevaContrasena', {
+                const response = await fetch(`${server}/api/authenticatorAdmin/establecerNuevaContrasena`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

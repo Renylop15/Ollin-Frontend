@@ -1,9 +1,10 @@
 import { mostrarLugares } from "../ARCY-PRUEBAS/places2.js";
 import { getInfo, obtenerCoordenadasPorPlaceId, obtenerUnLugarConId, updateHTML } from "./utilidadesMapa.js";
+const server = "https://ollin-backend-production.up.railway.app"
 
 export const comprobarSiLugarEstaVisitado = async (placeId) => {
     try {
-        const res = await fetch('http://localhost:1234/api/lugarVisitado/obtenerLugarVisitadoIdlugar', {
+        const res = await fetch(`${server}/api/lugarVisitado/obtenerLugarVisitadoIdlugar`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -45,7 +46,7 @@ export const handleVisitedClick = async (e) => {
     const infoName = document.getElementById("info-name");
     const nombreUsuario = document.getElementById("nombreUsuario");
 
-    const res = await fetch('http://localhost:1234/api/lugarVisitado/crearLugarVisitado', {
+    const res = await fetch(`${server}/api/lugarVisitado/crearLugarVisitado`, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'

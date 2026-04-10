@@ -1,3 +1,5 @@
+const server = "https://ollin-backend-production.up.railway.app"
+
 document.addEventListener('DOMContentLoaded', async function () {
   // Función para manejar el clic en ambos botones 
 
@@ -9,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   const nombreUsuario = document.getElementById("nombreUsuario");
   console.log(nombreUsuario.dataset.idTurista)
 
-  const res = await fetch('http://localhost:1234/api/itinerario/obtenerItinerarios', {
+  const res = await fetch(`${server}/api/itinerario/obtenerItinerarios`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

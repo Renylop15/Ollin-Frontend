@@ -1,3 +1,5 @@
+const server = "https://ollin-backend-production.up.railway.app"
+
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('loginFormRegister');
 
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const contrasena = document.getElementById('password').value;
                 const fechaNacimiento = document.getElementById('birthdate').value;
                 console.log(nombre, apellido, correo, contrasena, fechaNacimiento);
-                const res = await fetch('http://localhost:1234/api/authenticator/registro/usuarioTurista', {
+                const res = await fetch(`${server}/api/authenticator/registro/usuarioTurista`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

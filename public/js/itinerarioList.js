@@ -1,5 +1,7 @@
-const API_URL = 'http://localhost:1234/api/itinerario/obtenerItinerarios';
-const API_URL_CREAR_LUGAR_ITINERARIO = 'http://localhost:1234/api/lugarItinerario/crearLugarItinerario';
+const server = "https://ollin-backend-production.up.railway.app"
+
+const API_URL = `${server}/api/itinerario/obtenerItinerarios`;
+const API_URL_CREAR_LUGAR_ITINERARIO = `${server}/api/lugarItinerario/crearLugarItinerario`;
 
 async function fetchItineraryPlaces(id_Turista) {
     console.log("fetchItineraryPlaces llamada con idTurista:", id_Turista);

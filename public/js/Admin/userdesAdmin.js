@@ -1,7 +1,8 @@
+const server = "https://ollin-backend-production.up.railway.app"
 // Función para obtener los museos
 async function fetchUsers() {
   try {
-      const response = await fetch('http://localhost:1234/api/usuarioTurista', {
+      const response = await fetch(`${server}/api/usuarioTurista`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
       });
@@ -13,7 +14,7 @@ async function fetchUsers() {
 }
 
 function deleteUser(userID) {
-    fetch(`http://localhost:1234/api/deleteUsuario/${userID}`, {
+    fetch(`${server}/api/deleteUsuario/${userID}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
     })

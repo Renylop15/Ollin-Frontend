@@ -11,11 +11,12 @@ let FILTER_HAS_SERVICES = false;
 let FILTER_PRECIO_MAX = null;
 let USER_LOCATION = null;
 let FILTER_MAX_DISTANCE_KM = null;
+const server = "https://ollin-backend-production.up.railway.app"
 
 // Función para obtener los museos
 async function fetchPlaces() {
   try {
-      const response = await fetch('http://localhost:1234/api/queja/', {
+      const response = await fetch(`${server}/api/queja/`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
       });

@@ -1,7 +1,9 @@
+const server = "https://ollin-backend-production.up.railway.app"
+
 async function fetchNumVisitPlaces(idTurista) {
     console.log("fetchNumVisitPlaces llamada con idTurista:", idTurista);
     try {
-        const response = await fetch('http://localhost:1234/api/lugarVisitado/obtenerNumMuseoVisitadoMes', {
+        const response = await fetch(`${server}/api/lugarVisitado/obtenerNumMuseoVisitadoMes`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ idTurista })

@@ -1,4 +1,6 @@
-const API_URL = 'http://localhost:1234/api/lugarItinerario/obtenerLugaresItinerario';
+const server = "https://ollin-backend-production.up.railway.app"
+
+const API_URL = `${server}/api/lugarItinerario/obtenerLugaresItinerario`;
 let placesService; 
 
 let miDato = document.cookie.split('; ').find(row => row.startsWith('miDato='));
@@ -242,7 +244,7 @@ const OrdenarValores = async (selectedModes) => {
 async function fetchEditIti(museo) {
   try {
     const response = await fetch(
-      'http://localhost:1234/api/lugarItinerario/editarLugarItinerario',
+      `${server}/api/lugarItinerario/editarLugarItinerario`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

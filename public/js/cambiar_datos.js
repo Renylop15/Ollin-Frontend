@@ -1,6 +1,6 @@
 let modal
 let idTurista
-
+const server = "https://ollin-backend-production.up.railway.app"
 function esperarUsuario() {
     return new Promise(resolve => {
         const interval = setInterval(() => {
@@ -409,7 +409,7 @@ function removeHighlight(field) {
 
 async function fetchGetUser(idTurista){
     try {
-        const response = await fetch(`http://localhost:1234/api/usuarioTurista/identificador/${idTurista}`, {
+        const response = await fetch(`${server}/api/usuarioTurista/identificador/${idTurista}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -422,7 +422,7 @@ async function fetchGetUser(idTurista){
 
 async function fetchChangeName(idTurista,newName){
     try {
-        const response = await fetch(`http://localhost:1234/api/usuarioTurista/actualizarNom`, {
+        const response = await fetch(`${server}/api/usuarioTurista/actualizarNom`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Turista: idTurista, Nombre: newName })
@@ -455,7 +455,7 @@ async function alertsChangeName(idTurista,newName){
 
 async function fetchChangeLastName(idTurista,newLastName){
     try {
-        const response = await fetch(`http://localhost:1234/api/usuarioTurista/actualizarApe`, {
+        const response = await fetch(`${server}/api/usuarioTurista/actualizarApe`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Turista: idTurista, Apellido: newLastName })
@@ -488,7 +488,7 @@ async function alertsChangeLastName(idTurista,newLastName){
 
 async function fetchChangeEmail(idTurista,newEmail){
     try {
-        const response = await fetch(`http://localhost:1234/api/usuarioTurista/actualizarEmail`, {
+        const response = await fetch(`${server}/api/usuarioTurista/actualizarEmail`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Turista: idTurista, Correo: newEmail })
@@ -521,7 +521,7 @@ async function alertsChangeEmail(idTurista,newEmail){
 
 async function fetchChangePW(idTurista,newPassword){
     try {
-        const response = await fetch(`http://localhost:1234/api/usuarioTurista/cambiarContrasena`, {
+        const response = await fetch(`${server}/api/usuarioTurista/cambiarContrasena`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Turista: idTurista, Contrasena: newPassword })
@@ -581,7 +581,7 @@ function deleteAcc(idTurista){
     console.log('ID del usuario a eliminar:', userId);
 
         //fetch eliminar
-    fetch(`http://localhost:1234/api/deleteUsuario/${idTurista}`,{
+    fetch(`${server}/api/deleteUsuario/${idTurista}`,{
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
     })

@@ -1,8 +1,9 @@
 console.log("Inicio.js cargado");
+const server = "https://ollin-backend-production.up.railway.app"
 
 async function fetchRecommendedMuseums() {
     try {
-        const response = await fetch('http://localhost:1234/api/lugarVisitado/recomendarMuseos',
+        const response = await fetch(`${server}/api/lugarVisitado/recomendarMuseos`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
@@ -93,7 +94,7 @@ async function getPhotos(placeId) {
 
 let eventos = [];
 let currentIndex = 0;
-const API_URL_CREAR_LUGAR_ITINERARIO = 'http://localhost:1234/api/lugarItinerario/crearLugarItinerario';
+const API_URL_CREAR_LUGAR_ITINERARIO = `${server}/api/lugarItinerario/crearLugarItinerario`;
 
 // 🔹 Variables globales para reutilizar en el banner
 let eventoActual = null;
@@ -105,7 +106,7 @@ let museosActuales = [];
 
 async function cargarEventos() {
     try {
-        const response = await fetch('http://localhost:1234/api/evento/obtenerDescripcionEvento', {
+        const response = await fetch(`${server}/api/evento/obtenerDescripcionEvento`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -139,7 +140,7 @@ async function addPlaceToItinerary(idPlan, idMuseo, NomLugar) {
 
 async function cargarMuseosEvento(idEvento){
     try{
-        const response = await fetch('http://localhost:1234/api/evento/obtenerMuseosPorEvento', {
+        const response = await fetch(`${server}/api/evento/obtenerMuseosPorEvento`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Evento: idEvento }) 
@@ -301,7 +302,7 @@ function generarNombreItinerario(evento) {
 async function saveEventAndMuseums(nombreItinerario, idTurista, museos) {
     try {
 
-        const res = await fetch('http://localhost:1234/api/itinerario/crearItinerario', {
+        const res = await fetch(`${server}/api/itinerario/crearItinerario`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

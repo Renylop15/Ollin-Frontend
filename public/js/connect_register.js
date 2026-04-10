@@ -1,3 +1,5 @@
+const server = "https://ollin-backend-production.up.railway.app"
+
 document.getElementById('loginFormRegister').addEventListener('submit', async function (event) {
   event.preventDefault()
 
@@ -18,7 +20,7 @@ document.getElementById('loginFormRegister').addEventListener('submit', async fu
   }
 
   try {
-    const response = await fetch('http://localhost:1234/registro/usuarioTurista', {
+    const response = await fetch(`${server}/registro/usuarioTurista`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

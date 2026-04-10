@@ -1,8 +1,9 @@
 import { getUserLocation } from "../ARCY-imports/getUserLocation.js"
 import { rutaIti } from "../ARCY-imports/rutas.js"
+const server = "https://ollin-backend-production.up.railway.app"
 
-const API_URL = 'http://localhost:1234/api/lugarItinerario/obtenerLugaresItinerario';
-const API_URL_STATEI = 'http://localhost:1234/api/lugarItinerario/editarEstadoLugarItinerario';
+const API_URL = `${server}/api/lugarItinerario/obtenerLugaresItinerario`;
+const API_URL_STATEI = `${server}/api/lugarItinerario/editarEstadoLugarItinerario`;
 
 let mapa;
 let directionsService
@@ -48,7 +49,7 @@ function getTime(originCoords, destCords, mode){
 
 async function createQueja(TipoQueja, idMuseo) {
     try {
-        const response = await fetch('http://localhost:1234/api/queja/crearQueja', {
+        const response = await fetch(`${server}/api/queja/crearQueja`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ entrada: { 
@@ -97,7 +98,7 @@ async function fetchStateItinerary(idPlanMuseo){
 
 async function updateItineraryState(idPlan) {
     try {
-        const response = await fetch('http://localhost:1234/api/itinerario/editarEstadoItinerario', {
+        const response = await fetch(`${server}/api/itinerario/editarEstadoItinerario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_Plan: idPlan, Estado: 'F' })
