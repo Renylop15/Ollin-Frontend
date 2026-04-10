@@ -1,52 +1,58 @@
-const server = "https://ollin-backend-production.up.railway.app"
+const server = "https://ollin-backend-production.up.railway.app";
 
 document.addEventListener('DOMContentLoaded', async function () {
+  
+  // 1. Sacamos la llave de la memoria
+  const token = localStorage.getItem('token');
+
+  // Si no trae llave, lo rebotamos inmediatamente
+  if (!token) {
+    console.log("No hay token guardado, regresando al login...");
+    window.location.href = "/";
+    return;
+  }
+
   try {
+    // 2. Mandamos la llave al backend en el cuerpo (body) de la petición
     const res = await fetch(`${server}/api/authenticator/usuarioLogueado`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      // ¡ESTA ES LA LÍNEA MÁGICA! Hace que el navegador envíe la cookie solo.
-      credentials: 'include' 
-      // Borramos el "body" porque ya no necesitamos mandarlo como texto.
+      body: JSON.stringify({ token: token }) // ¡Vital mandar esto!
     });
 
-    // Si el servidor responde que no estamos logueados (401), mandamos al login
+    // Si el backend dice que el token es viejo o inválido
     if (!res.ok) {
-      window.location.href = "/";
-      return;
+      throw new Error("El backend rechazó el token (401)");
     }
 
-    const usuario = await res.json();
-    
-    // Si por alguna razón el usuario viene vacío
+    let usuario = await res.json();
+
+    // 3. Parche para extraer el ID si viene en arreglo de Supabase
+    if (Array.isArray(usuario) && usuario.length > 0) {
+      usuario = usuario[0];
+    }
+
+    // Si el usuario viene vacío o es "false"
     if (!usuario || usuario === false) {
-      window.location.href = "/";
-      return;
+      throw new Error("Token válido pero usuario no existe");
     }
 
-    // Si todo salió bien, guardamos los datos
+    // ==========================================
+    // ¡ÉXITO! SI LLEGA AQUÍ, EL USUARIO ESTÁ DENTRO
+    // ==========================================
+    console.log("¡Sesión validada con éxito!", usuario);
     window.usuarioLogueado = usuario;
-    const nombreUsuario = document.getElementById("nombreUsuario");
-    
-    if (nombreUsuario) { // Siempre es bueno verificar que el elemento existe en el HTML
-      nombreUsuario.innerHTML = usuario.Nombre;
-      nombreUsuario.dataset.idTurista = usuario.id;
-    }
+
+    // Aquí ya puedes poner el código para pintar su nombre en el HTML
+    // const nombreUsuario = document.getElementById("nombreUsuario");
+    // if (nombreUsuario) nombreUsuario.innerHTML = usuario.Nombre;
 
   } catch (error) {
-    console.error("Error verificando sesión:", error);
+    // Si cualquier cosa falla arriba, borramos la llave sucia y lo rebotamos
+    console.error("Error verificando sesión:", error.message);
+    localStorage.removeItem('token');
     window.location.href = "/";
   }
-})
-
-document.addEventListener('DOMContentLoaded', async function () {
-  document.getElementById('cerrarSesion').addEventListener('click', async (e) => {
-    e.preventDefault()
-
-    document.cookie = 'jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-
-    window.location.href = "/"
-  })
-})
+});
