@@ -20,6 +20,17 @@ async function fetchItineraryPlaces(id_Turista) {
     }
 }
 
+function esperarUsuario() {
+    return new Promise(resolve => {
+        const interval = setInterval(() => {
+            if (window.usuarioLogueado) {
+                clearInterval(interval);
+                resolve(window.usuarioLogueado);
+            }
+        }, 50);
+    });
+}
+
 async function fetchItineraryPlaces1(idPlan) {
     console.log("fetchItineraryPlaces llamada con idItinerario:", idPlan);
     try {
@@ -168,6 +179,7 @@ function createItineraryCard(itinerario, index, placeName, photoUrls) {
 // Evento al cargar el documento
 document.addEventListener('DOMContentLoaded', async function () {
     console.log("DOMContentLoaded, inicializando pantalla de itinerarios");
+    await esperarUsuario(); // Esperar a que la variable global usuarioLogueado esté disponible 
     displayFavorites();
 });
 

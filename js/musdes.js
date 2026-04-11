@@ -1136,7 +1136,19 @@ img2.src = photo2;
     document.getElementById("viewMoreCard").classList.remove("hidden");
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function esperarUsuario() {
+    return new Promise(resolve => {
+        const interval = setInterval(() => {
+            if (window.usuarioLogueado) {
+                clearInterval(interval);
+                resolve(window.usuarioLogueado);
+            }
+        }, 50);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+        await esperarUsuario();
     const select = document.getElementById('lang-select');
     const saved = localStorage.getItem('lang') || 'es';
     select.value = saved;

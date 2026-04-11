@@ -175,7 +175,19 @@ async function showDone(placeId, nombreLugar, idTurista) {
   });
 }
 
+function esperarUsuario() {
+    return new Promise(resolve => {
+        const interval = setInterval(() => {
+            if (window.usuarioLogueado) {
+                clearInterval(interval);
+                resolve(window.usuarioLogueado);
+            }
+        }, 50);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', async function () {
+      await esperarUsuario(); // Esperar a que la variable global usuarioLogueado esté disponible
     console.log("DOMContentLoaded, inicializando pantalla de ruta única...");
     initMap();
 

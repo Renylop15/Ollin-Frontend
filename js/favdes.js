@@ -22,6 +22,17 @@ async function fetchFavoritePlaces(idTurista) {
     }
 }
 
+function esperarUsuario() {
+    return new Promise(resolve => {
+        const interval = setInterval(() => {
+            if (window.usuarioLogueado) {
+                clearInterval(interval);
+                resolve(window.usuarioLogueado);
+            }
+        }, 50);
+    });
+}
+
 // Función para obtener la información de un lugar sin utilizar el mapa
 async function getInfo(placeId) {
   console.log("getInfo llamada con place:", placeId);
@@ -255,7 +266,8 @@ function removeFavorite(idLugar, idTurista) {
 
 
 // Inicializar la pantalla de favoritos cuando el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     console.log("DOMContentLoaded, inicializando pantalla de favoritos");
+    await esperarUsuario(); // Esperar a que la variable global usuarioLogueado esté disponible
     displayFavorites();
   });

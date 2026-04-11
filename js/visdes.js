@@ -22,6 +22,17 @@ async function fetchVisitPlaces(idTurista) {
     }
 }
 
+function esperarUsuario() {
+    return new Promise(resolve => {
+        const interval = setInterval(() => {
+            if (window.usuarioLogueado) {
+                clearInterval(interval);
+                resolve(window.usuarioLogueado);
+            }
+        }, 50);
+    });
+}
+
 async function fetchItineraryPlaces(id_Turista) {
     console.log("fetchItineraryPlaces llamada con idTurista:", id_Turista);
     try {
@@ -477,8 +488,9 @@ function removeVisit(idLugar, idTurista) {
 
 
 // Inicializar la pantalla de favoritos cuando el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     console.log("DOMContentLoaded, inicializando pantalla de favoritos");
+    await esperarUsuario(); // Esperar a que la variable global usuarioLogueado esté disponible
     displayVisit();
     displayVisitPlans();
   });

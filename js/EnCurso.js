@@ -26,6 +26,8 @@ async function initMap() {
 }
 
 
+
+
 function getTime(originCoords, destCords, mode){
     let directionsService = new google.maps.DirectionsService();
     const request = {
@@ -533,8 +535,20 @@ const MostrarValores = async () => {
 
 }
 
+function esperarUsuario() {
+    return new Promise(resolve => {
+        const interval = setInterval(() => {
+            if (window.usuarioLogueado) {
+                clearInterval(interval);
+                resolve(window.usuarioLogueado);
+            }
+        }, 50);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', async function () {
     console.log("DOMContentLoaded, inicializando pantalla de itinerarios");
+    await esperarUsuario(); // Esperar a que la variable global usuarioLogueado esté disponible
     initMap();
 
     const { DirectionsService, DirectionsRenderer } = await google.maps.importLibrary("routes");
