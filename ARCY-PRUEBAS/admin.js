@@ -44,6 +44,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     // ==========================================
     console.log("¡Sesión validada con éxito!", usuario);
     window.usuarioLogueado = usuario;
+    window.idTurista = usuario.id; // Guardamos el ID del turista en una variable global para usarla en otros scripts
+    const nombreUsuario = document.getElementById("nombreUsuario")
+    nombreUsuario.innerHTML = usuario.Nombre  
+    nombreUsuario.dataset.idTurista = usuario.id
 
     // Aquí ya puedes poner el código para pintar su nombre en el HTML
     // const nombreUsuario = document.getElementById("nombreUsuario");
@@ -54,5 +58,15 @@ document.addEventListener('DOMContentLoaded', async function () {
     console.error("Error verificando sesión:", error.message);
     localStorage.removeItem('token');
     window.location.href = "/";
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function () {
+      localStorage.removeItem('token');
+      window.location.href = "/";
+    });
   }
 });
