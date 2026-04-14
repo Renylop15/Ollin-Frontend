@@ -571,90 +571,107 @@ function distanceInMeters(coord1, coord2) {
 }
 
 async function ShowDone(nombreLugar, IdLugarItinerario, nombreLugarSig, lugares, IDMUSEO){  
-    return new Promise(async(resolve)=>{
-    let Omitir=document.getElementById("btnOmitir");
-    let Llegar=document.getElementById("btnLlegar");
-    let Queja=document.getElementById("btnQueja");
+  return new Promise((resolve)=>{
 
-    Queja.addEventListener('click', function onQueja() {
-        Queja.removeEventListener('click', onQueja);
-        Swal.fire({
-            title: '¿Qué anomalía encontraste?',
-            input: 'select',
-            inputOptions: {
-                HORARIO_CERRADO_INESPERADO: 'Cerrado cuando debía estar abierto',
-                HORARIO_CIERRE_ANTICIPADO: 'Cerró antes de lo indicado',
-                EVENTO_ESPECIAL: 'Evento especial / acceso restringido',
-                INFORMACION_DESACTUALIZADA: 'Información incorrecta'
-            },
-                inputPlaceholder: 'Selecciona una opción',
-                showCancelButton: true,
-                confirmButtonText: 'Reportar',
-                confirmButtonColor: "#65B2C6",
-                cancelButtonColor: "#D63D6C"
-            }).then(async (result) => {
-            if (result.isConfirmed) {
-                const reporte = result.value;
-                // Aquí puedes enviar el reporte al servidor o manejarlo como necesites
-                console.log(result.value, IDMUSEO);
-                await createQueja(result.value, IDMUSEO);
-                Swal.fire('¡Gracias por tu reporte!', 'Lo revisaremos lo antes posible.', 'success');
-            }
-        });
+    let Omitir = document.getElementById("btnOmitir");
+    let Llegar = document.getElementById("btnLlegar");
+    let Queja = document.getElementById("btnQueja");
+
+    // =========================
+    // 🧾 QUEJA
+    // =========================
+    Queja.addEventListener('click', async function onQueja() {
+      Queja.removeEventListener('click', onQueja);
+
+      const result = await Swal.fire({
+        title: '¿Qué anomalía encontraste?',
+        input: 'select',
+        inputOptions: {
+          HORARIO_CERRADO_INESPERADO: 'Cerrado cuando debía estar abierto',
+          HORARIO_CIERRE_ANTICIPADO: 'Cerró antes de lo indicado',
+          EVENTO_ESPECIAL: 'Evento especial / acceso restringido',
+          INFORMACION_DESACTUALIZADA: 'Información incorrecta'
+        },
+        inputPlaceholder: 'Selecciona una opción',
+        showCancelButton: true,
+        confirmButtonText: 'Reportar',
+        confirmButtonColor: "#65B2C6",
+        cancelButtonColor: "#D63D6C"
+      });
+
+      if (result.isConfirmed) {
+        await createQueja(result.value, IDMUSEO);
+        await Swal.fire('¡Gracias por tu reporte!', 'Lo revisaremos lo antes posible.', 'success');
+      }
+
     }, { once: true });
 
-
-
-    Omitir.addEventListener('click',function onOmitir(){
-        Omitir.removeEventListener('click', onOmitir);
-        window.location.href="/aventuras_proximas";
-        resolve();
+    // =========================
+    // ⏭ OMITIR DIRECTO
+    // =========================
+    Omitir.addEventListener('click', function onOmitir(){
+      Omitir.removeEventListener('click', onOmitir);
+      window.location.href="/aventuras_proximas";
+      resolve();
     }, { once: true });
 
-Llegar.addEventListener('click',function onLlegar(){
-    console.log("lugares", lugares);
-    if(nombreLugar && nombreLugarSig){
-    Swal.fire({
-    title: `¿Haz llegado a ${nombreLugar} ?`,
-    text: `¿Deseas continuar con el siguiente lugar: ${nombreLugarSig}?`,
-    icon:"success",
-    showCancelButton: true,
-    confirmButtonColor: "#65B2C6",
-    cancelButtonColor: "#D63D6C",
-    confirmButtonText: "LLegar",
-    cancelButtonText: "Omitir",
-}).then(async(result) => {
-    if (result.isConfirmed) {
-        console.time('visit-museum');
-        const LugarModifiedV = await fetchStateItinerary(IdLugarItinerario);
-        console.timeEnd('visit-museum');
-        console.log(LugarModifiedV);
-        resolve();
-    }
-    else {
-        Swal.fire({
-            icon: "info",
-            title: `¿Deseas omitir ${nombreLugar} de tu aventura?`, 
-            text: `Esta accion omitira este lugar de la aventura y se continuara con ${nombreLugarSig}`,
-            showCancelButton: true,
-            confirmButtonColor: "#65B2C6",
-            cancelButtonColor: "#D63D6C",
-            confirmButtonText: "Omitir",
-            cancelButtonText: "Cancelar"
-        }).then(async(result1)=>{
-            if(result1.isConfirmed){
-                console.time('omit-museum');
-                const LugarModified = await fetchStateOItinerary(IdLugarItinerario);
-                console.timeEnd('omit-museum');
-                console.log(LugarModified);
-                resolve();
-            }
+    // =========================
+    // 🧭 LLEGAR / OMITIR
+    // =========================
+    Llegar.addEventListener('click', async function onLlegar(){
+
+      // =========================
+      // 🟢 CASO NORMAL
+      // =========================
+      if(nombreLugar && nombreLugarSig){
+
+        const result = await Swal.fire({
+          title: `¿Haz llegado a ${nombreLugar} ?`,
+          text: `¿Deseas continuar con el siguiente lugar: ${nombreLugarSig}?`,
+          icon:"success",
+          showCancelButton: true,
+          confirmButtonColor: "#65B2C6",
+          cancelButtonColor: "#D63D6C",
+          confirmButtonText: "LLegar",
+          cancelButtonText: "Omitir",
         });
-    }
-});
-}
-else{
-    Swal.fire({
+
+        if (result.isConfirmed) {
+          console.time('visit-museum');
+          const LugarModifiedV = await fetchStateItinerary(IdLugarItinerario);
+          console.timeEnd('visit-museum');
+          console.log(LugarModifiedV);
+
+          resolve();
+          return;
+        }
+
+        const result1 = await Swal.fire({
+          icon: "info",
+          title: `¿Deseas omitir ${nombreLugar} de tu aventura?`, 
+          text: `Esta accion omitira este lugar de la aventura y se continuara con ${nombreLugarSig}`,
+          showCancelButton: true,
+          confirmButtonColor: "#65B2C6",
+          cancelButtonColor: "#D63D6C",
+          confirmButtonText: "Omitir",
+          cancelButtonText: "Cancelar"
+        });
+
+        if(result1.isConfirmed){
+          console.time('omit-museum');
+          const LugarModified = await fetchStateOItinerary(IdLugarItinerario);
+          console.timeEnd('omit-museum');
+          console.log(LugarModified);      
+        }
+
+        resolve();
+        return;
+      }
+
+      // =========================
+      // 🔵 ÚLTIMO LUGAR
+      // =========================
+      const result = await Swal.fire({
         title: `¿Haz llegado a ${nombreLugar} ?`,
         text: `Este es el ultimo lugar de la aventura`,
         icon:"success",
@@ -663,110 +680,116 @@ else{
         cancelButtonColor: "#D63D6C",
         confirmButtonText: "LLegar",
         cancelButtonText: "Omitir"
-    }).then(async(result) => {
-        if (result.isConfirmed) {
-            const LugarModifiedV = await fetchStateItinerary(IdLugarItinerario);
-            console.log(LugarModifiedV);
-            resolve();
-            //console.log("Adventures info: ",lugares)
-            var i=0;
-    
-            console.log(lugares.length);
-            
-            const lugarDes = lugares.find(lugar => lugar['Posición en itinerario'] === 0);
-            const lugarActualizados = await fetchItineraryPlaces(lugarDes['ID Plan']);
+      });
 
+      // =========================
+      // 🟢 LLEGÓ
+      // =========================
+      if (result.isConfirmed) {
 
-            while(i<=lugares.length-1)
+        const LugarModifiedV = await fetchStateItinerary(IdLugarItinerario);
+        console.log(LugarModifiedV);
+
+        var i=0;
+
+        console.log(lugares.length);
+
+        const lugarDes = lugares.find(lugar => lugar['Posición en itinerario'] === 0);
+        const lugarActualizados = await fetchItineraryPlaces(lugarDes['ID Plan']);
+
+        while(i<=lugares.length-1)
+        {
+          const lugarAct=lugarActualizados.find(lugar => lugar['Posición en itinerario'] === i);
+          console.log("Hola soy: ", i);
+          console.log(lugarAct['Estado Museo']==='V');
+          console.log(lugarAct['ID Plan']);
+
+          if(lugarAct['Estado Museo']!=='S')
+          {
+            if(i===lugarActualizados.length-1)
             {
-
-                const lugarAct=lugarActualizados.find(lugar => lugar['Posición en itinerario'] === i);
-                console.log("Hola soy: ", i);
-                console.log(lugarAct['Estado Museo']==='V');
-                console.log(lugarAct['ID Plan']);
-                if(lugarAct['Estado Museo']!=='S')
-                {
-                    if(i===lugarActualizados.length-1)
-                    {
-                        console.log(lugarAct['ID Plan']);
-                        const StateItinerary = await updateItineraryState(lugarAct['ID Plan']);
-                        console.log(StateItinerary);                       
-                        break;
-                    }
-                }
-                else{
-                    console.log("Entrando al else");
-                    break;
-                }
-                i++;
+              console.log(lugarAct['ID Plan']);
+              const StateItinerary = await updateItineraryState(lugarAct['ID Plan']);
+              console.log(StateItinerary);                       
+              break;
             }
-            Swal.fire({
-                icon: "success",
-                title: `Tu Aventura "${lugarDes['Plan']}" ha llegado a su fin `, 
-                showConfirmButton: true,
-                confirmButtonColor: "#65B2C6",
-            }).then((result)=>{
-                window.location.href="/aventuras_proximas";
-            });
-
-            
+          }
+          else{
+            console.log("Entrando al else");
+            break;
+          }
+          i++;
         }
-        else{
-            Swal.fire({
-                icon: "info",
-                title: `¿Deseas omitir ${nombreLugar} de tu aventura?`, 
-                text: `Este es el ultimo lugar de la aventura`,
-                showCancelButton: true,
-                confirmButtonColor: "#65B2C6",
-                cancelButtonColor: "#D63D6C",
-                confirmButtonText: "Omitir",
-                cancelButtonText: "Cancelar"
-            }).then(async(result)=>{
-                if(result.isConfirmed){
-                    const LugarModified = await fetchStateOItinerary(IdLugarItinerario);
-                    console.log(LugarModified);
-                    resolve();
 
-                    var i=0;
-    
-                    console.log(lugares.length);
-                    
-                    const lugarDes = lugares.find(lugar => lugar['Posición en itinerario'] === 0);
-                    const lugarActualizados = await fetchItineraryPlaces(lugarDes['ID Plan']);
-                    while(i<=lugares.length-1)
-                    {
-        
-                        const lugarAct=lugarActualizados.find(lugar => lugar['Posición en itinerario'] === i);
-                        console.log("Hola soy: ", i);
-                        console.log(lugarAct['ID Plan']);
-                        if(lugarAct['Estado Museo']!=='S')
-                        {
-                            if(i===lugarActualizados.length-1)
-                            {
-                                console.log(lugarAct['ID Plan']);
-                                const StateItinerary = await updateItineraryState(lugarAct['ID Plan']);
-                                console.log(StateItinerary);                       
-                                
-                                break;
-                            }
-                        }
-                        i++;
-                    }
-                    Swal.fire({
-                        icon: "success",
-                        title: `Tu Plan de Visita "${lugarDes['Plan']}" ha llegado a su fin `, 
-                        showConfirmButton: true,
-                        confirmButtonColor: "#65B2C6",
-                    }).then((result)=>{
-                        window.location.href="/aventuras_proximas";
-                    });
-                }
-            });
+        await Swal.fire({
+          icon: "success",
+          title: `Tu Aventura "${lugarDes['Plan']}" ha llegado a su fin `,
+          confirmButtonColor: "#65B2C6",
+        });
+
+        window.location.href="/aventuras_proximas";
+        resolve();
+        return;
+      }
+
+      // =========================
+      // 🟡 OMITIR
+      // =========================
+      const result2 = await Swal.fire({
+        icon: "info",
+        title: `¿Deseas omitir ${nombreLugar} de tu aventura?`, 
+        text: `Este es el ultimo lugar de la aventura`,
+        showCancelButton: true,
+        confirmButtonColor: "#65B2C6",
+        cancelButtonColor: "#D63D6C",
+        confirmButtonText: "Omitir",
+        cancelButtonText: "Cancelar"
+      });
+
+      if(result2.isConfirmed){
+
+        const LugarModified = await fetchStateOItinerary(IdLugarItinerario);
+        console.log(LugarModified);
+
+        var i=0;
+
+        console.log(lugares.length);
+
+        const lugarDes = lugares.find(lugar => lugar['Posición en itinerario'] === 0);
+        const lugarActualizados = await fetchItineraryPlaces(lugarDes['ID Plan']);
+
+        while(i<=lugares.length-1)
+        {
+          const lugarAct=lugarActualizados.find(lugar => lugar['Posición en itinerario'] === i);
+          console.log("Hola soy: ", i);
+          console.log(lugarAct['ID Plan']);
+
+          if(lugarAct['Estado Museo']!=='S')
+          {
+            if(i===lugarActualizados.length-1)
+            {
+              console.log(lugarAct['ID Plan']);
+              const StateItinerary = await updateItineraryState(lugarAct['ID Plan']);
+              console.log(StateItinerary);                       
+              break;
+            }
+          }
+          i++;
         }
-    });
-}
-}, { once: true });
-});
+
+        await Swal.fire({
+          icon: "success",
+          title: `Tu Plan de Visita "${lugarDes['Plan']}" ha llegado a su fin `, 
+          confirmButtonColor: "#65B2C6",
+        });
+
+        window.location.href="/aventuras_proximas";
+      }
+
+      resolve();
+
+    }, { once: true });
+  });
 }
 
 function eliminarCookie(cookieName) {
